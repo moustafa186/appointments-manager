@@ -21,7 +21,7 @@ public class StylistController {
     @PostMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiOperation(value = "View a list of available stylists", response = List.class)
+    @ApiOperation(value = "Add a new stylist")
     public Stylist addStylist(@RequestBody Stylist stylist) {
         return stylistService.createStylist(stylist);
     }
