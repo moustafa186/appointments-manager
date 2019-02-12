@@ -8,12 +8,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity @Table(name = "stylists")
+@Entity(name = "stylists")
 @Data @NoArgsConstructor @AllArgsConstructor
 @ApiModel(description = "All details about the Stylist.")
 public class Stylist {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "stylist_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "stylist_seq")
     @ApiModelProperty(notes = "The database generated stylist ID", readOnly = true)
     @Column(name = "id")
     private Long id;
