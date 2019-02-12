@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController()
 @RequestMapping("/appointments")
@@ -18,19 +20,16 @@ public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping
+    @PostMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "View a list of available appointments", response = List.class)
-    public Iterable<Appointment> listAvailableAppointments() {
-        return appointmentService.findAll();
-    }
+    @ApiOperation(value = "Reserve an available appointment for given customer")
+    public Appointment bookAppointmentAtTimeslot(@RequestBody AppointmentRequest appointmentRequest) throws ParseException {
+        System.out.println("customerId: " + appointmentRequest.getCustomerId());
+        System.out.println("timeslot: " + appointmentRequest.getTimeslot());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    @PatchMapping
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Reserve an available appointment")
-    public Appointment reserveAppointment(@RequestParam Long appointmentId, @RequestParam Long customerId) {
-        return appointmentService.reserveAppointment(appointmentId, customerId);
+        return appointmentService.bookAppointmentAtTimeslot(appointmentRequest.getCustomerId(),
+                dateFormat.parse(appointmentRequest.getTimeslot()));
     }
 }
