@@ -34,4 +34,8 @@ dependencies {
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok:1.18.4'
+
+	// test library
+	testCompile 'io.rest-assured:rest-assured:3.3.0'
+	testCompile 'io.rest-assured:spring-mock-mvc:3.3.0'
 }

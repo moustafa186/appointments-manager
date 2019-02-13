@@ -3,13 +3,17 @@ package com.outfittery.AppointmentManager.stylists;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity(name = "stylists")
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @ApiModel(description = "All details about the Stylist.")
 public class Stylist {
     @Id
