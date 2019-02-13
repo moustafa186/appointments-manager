@@ -1,4 +1,4 @@
-# appointments-manager
+# appointments-manager-api
 Stylists Appointment Manager API
 
 ## What is there now!
