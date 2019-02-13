@@ -6,7 +6,8 @@ Stylists Appointment Manager API
 - **POST** /stylists: to add new stylist
 - **GET** /timeslots: to list all available time slots (considering all stylists)
 - **POST** /appointments: to book appointment for certain customer on a given time
-detailed documentation for API can be found at: /swagger-ui.html
+
+Detailed documentation for API can be found at: /swagger-ui.html
 
 ## What is planned to be covered
 Error/Exception handling and some corner cases:
