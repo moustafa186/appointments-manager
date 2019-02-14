@@ -21,48 +21,50 @@ public class StylistControllerTest {
 
     private MockMvcRequestSpecification spec;
 
+    Stylist stylistA, stylistB;
+
     @Before
     public void setUp(){
         spec = given().
                 standaloneSetup(stylistController).
                 contentType("application/json");
-    }
 
-    @Test
-    public void addStylist() {
-        Stylist stylistA = new Stylist().builder()
+        stylistA = new Stylist().builder()
                 .firstName("Malik")
                 .lastName("Moustafa")
                 .email("maloki@berlin.de")
                 .build();
 
-        spec.
-                body(stylistA).
-        when().
-                post("/stylists").
-        then().
-                statusCode(201).
-                body("id", equalTo(1)).
-                body("firstName", equalTo("Malik")).
-                body("lastName", equalTo("Moustafa")).
-                body("email", equalTo("maloki@berlin.de"));
-
-        Stylist stylistB = new Stylist().builder()
+        stylistB = new Stylist().builder()
                 .firstName("Ali")
                 .lastName("Kamal")
                 .email("ali.kamal@alex.eg")
                 .build();
+    }
+
+    @Test
+    public void addStylist() {
+        spec.
+            body(stylistA).
+        when().
+            post("/stylists").
+        then().
+            statusCode(201).
+            body("id", equalTo(1)).
+            body("firstName", equalTo("Malik")).
+            body("lastName", equalTo("Moustafa")).
+            body("email", equalTo("maloki@berlin.de"));
 
         spec.
-                body(stylistB).
-                when().
-                post("/stylists").
-                then().
-                statusCode(201).
-                body("id", equalTo(2)).
-                body("firstName", equalTo("Ali")).
-                body("lastName", equalTo("Kamal")).
-                body("email", equalTo("ali.kamal@alex.eg"));
+            body(stylistB).
+        when().
+            post("/stylists").
+        then().
+            statusCode(201).
+            body("id", equalTo(2)).
+            body("firstName", equalTo("Ali")).
+            body("lastName", equalTo("Kamal")).
+            body("email", equalTo("ali.kamal@alex.eg"));
     }
 
 }

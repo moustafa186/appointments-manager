@@ -20,9 +20,12 @@ public class StylistService {
         return stylistRespository.save(stylist);
     }
 
-    public Long getNextAvailableStylist(Date timeslot) {
+    public Long getNextAvailableStylist(Date timeslot) throws NoStylistsAvailableException {
         // TODO change to get stylist with least appointments
         List<Long> availableStylists = stylistRespository.findAvailableStylistsByTimeslot(timeslot);
-        return availableStylists.get(0);
+        if (availableStylists.size() > 0)
+            return availableStylists.get(0);
+        else
+            throw new NoStylistsAvailableException("No stylists available for given timeslot: " + timeslot);
     }
 }

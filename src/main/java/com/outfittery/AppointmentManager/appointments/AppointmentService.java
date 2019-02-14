@@ -1,8 +1,9 @@
 package com.outfittery.AppointmentManager.appointments;
 
+import com.outfittery.AppointmentManager.stylists.NoStylistsAvailableException;
 import com.outfittery.AppointmentManager.stylists.StylistService;
+import com.outfittery.AppointmentManager.timeslots.InvalidTimeslotException;
 import com.outfittery.AppointmentManager.timeslots.TimeslotService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,7 @@ public class AppointmentService {
     }
 
     @Transactional
-    public Appointment bookAppointmentAtTimeslot(Long customerId, Date timeslot) throws RuntimeException {
-        System.out.println(timeslot.toString());
+    public Appointment bookAppointmentAtTimeslot(Long customerId, Date timeslot) throws AppointmentBookingException, NoStylistsAvailableException, InvalidTimeslotException {
         boolean timeslotAvailable = timeslotService.isTimeslotAvailable(timeslot);
         if(timeslotAvailable) {
             Long availableStylistId = stylistService.getNextAvailableStylist(timeslot);
@@ -38,9 +38,10 @@ public class AppointmentService {
                     .stylistId(availableStylistId)
                     .date(timeslot)
                     .build();
+            timeslotService.bookTimeslot(timeslot);
             return appointmentRepository.save(appointmentToSave);
         } else {
-            throw new RuntimeException("Sorry! The appointment is booked. Please choose another time. Sorry for inconvenience");
+            throw new AppointmentBookingException("Sorry! The appointment is booked. Please choose another time. Sorry for inconvenience");
         }
     }
 }
